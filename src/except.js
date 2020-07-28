@@ -13,6 +13,9 @@ import _ from 'lodash'
  * // => { name: "John Doe", phones: [{ number: "12341234" }, { number: "43214321" }] }
  * ```
  *
+ * NOTE: if you don't want it to be recursive, use lodash's builtin `_.omit`.
+ * - altough you can use option deep: false, like `_.except(object, paths, { deep: false })`
+ *
  * @param  {Object} object source object to have its keys/properties ignored to camelCase
  * @return {Object}        "clone" object without target ignored keys
  */
