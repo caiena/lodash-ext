@@ -10755,6 +10755,44 @@
 	  return lodash.get(object, path);
 	}
 
+	/**
+	 * Creates a new object, ignoring all properties with the given name.
+	 * Useful when using existent data to create new resources - ignoring "ids".
+	 *
+	 * usage:
+	 * ```js
+	 * let existent = { id: 1, name: "John Doe", phones: [{ id: 1, number: "12341234" }, { id: 2, number: "43214231" }] }
+	 *
+	 * let dup = _.except(existent, 'id')
+	 * // => { name: "John Doe", phones: [{ number: "12341234" }, { number: "43214321" }] }
+	 * ```
+	 *
+	 * @param  {Object} object source object to have its keys/properties ignored to camelCase
+	 * @return {Object}        "clone" object without target ignored keys
+	 */
+
+	function except(object, paths) {
+	  var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+	      _ref$deep = _ref.deep,
+	      deep = _ref$deep === void 0 ? true : _ref$deep;
+
+	  var excepted = lodash.omit(object, paths);
+
+	  if (deep) {
+	    lodash.forOwn(excepted, function (value, key) {
+	      // checks that a value is a plain object or an array - for recursive key conversion
+	      // recursively update keys of any values that are also objects
+	      if (lodash.isObjectLike(value)) {
+	        excepted[key] = except(value, paths, {
+	          deep: deep
+	        });
+	      }
+	    });
+	  }
+
+	  return excepted;
+	}
+
 	// https://tc39.github.io/ecma262/#sec-object.keys
 
 	var objectKeys = Object.keys || function keys(O) {
@@ -11714,6 +11752,7 @@
 	  snakeizeKeys: snakeizeKeys,
 	  deleteBlanks: deleteBlanks,
 	  dig: dig,
+	  except: except,
 	  // rails like #blank? and #present?
 	  blank: blank,
 	  present: present,
@@ -11739,7 +11778,9 @@
 	  // merge:    _.merge,
 	  equals: lodash.isEqual,
 	  contains: lodash.isMatch,
-	  unaccent: lodash.deburr
+	  unaccent: lodash.deburr,
+	  all: lodash.every,
+	  any: lodash.some
 	});
 
 	return lodashExt;
