@@ -21,7 +21,6 @@
     "dist"
   ],
   "dependencies": {
-    "core-js": "3.16.3",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {},
@@ -42,6 +41,7 @@
     "chai-change": "^2.1.2",
     "chai-datetime": "^1.8.0",
     "chai-subset": "^1.6.0",
+    "core-js": "^3.5.0",
     "eslint": "^7.12.1",
     "glob": "^7.1.6",
     "js-yaml": "^4.1.0",
