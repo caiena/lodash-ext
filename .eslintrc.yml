@@ -6,7 +6,7 @@ root: true
 
 env:
   # browser: true
-  node: true
+  # node: true
   es6: true
 
 # The extends property value can omit the eslint-config- prefix of the package name.
@@ -54,8 +54,8 @@ overrides:
 
 # ! SAMPLE
 parserOptions:
-  ecmaVersion: 6
-  sourceType: module
+  ecmaVersion: 8
+  sourceType:  module
 #   ecmaFeatures:
 #       jsx: true
 
