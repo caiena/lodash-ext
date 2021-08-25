@@ -51,7 +51,7 @@ export default [
     input: "src/index.js",
     output: [
       // XXX: exports: "default" pois exportamos apenas o default no entrypoint (src/index.js)!
-      { file: pkg.main,   format: "cjs", exports: "default", sourcemap: true },
+      { file: pkg.main,   format: "cjs", sourcemap: true, exports: "default" },
       { file: pkg.module, format: "es",  sourcemap: true }
     ],
     // XXX: não vamos fazer lodash como external! vai empacotada junto!
