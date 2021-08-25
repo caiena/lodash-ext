@@ -32,7 +32,7 @@ export default [
     // external: [],
     plugins
   },
-  {
+  { // minified UMD build!
     input: 'src/index.js',
     output: {
       name: '_',
