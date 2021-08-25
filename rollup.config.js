@@ -1,9 +1,23 @@
-import commonjs     from 'rollup-plugin-commonjs'
-import resolve      from 'rollup-plugin-node-resolve'
-import localResolve from 'rollup-plugin-local-resolve'
-import babel        from 'rollup-plugin-babel'
+import nodeResolve from "@rollup/plugin-node-resolve"
+import commonjs    from "@rollup/plugin-commonjs"
+import babel       from "@rollup/plugin-babel"
+// import alias       from "@rollup/plugin-alias"
+// import json        from "@rollup/plugin-json"
+// import yaml        from "@rollup/plugin-yaml"
+
+// import glob from "rollup-plugin-glob-import"
 import { terser }   from "rollup-plugin-terser"
+
 import pkg          from './package.json'
+
+const plugins = [
+  nodeResolve(),
+  commonjs(),
+  babel({
+    babelHelpers: "bundled",
+    exclude:      ["node_modules/**"]
+  })
+]
 
 
 export default [
@@ -15,61 +29,33 @@ export default [
       file: pkg.browser,
       format: 'umd'
     },
-    plugins: [
-      resolve(),  // so Rollup can find dependencies like `lodash` or `core-js`
-      commonjs(), // so Rollup can transform dependencies in CommonJS to ESM
-      babel(),    // uses default config in babel.config.js (targeting browsers)
-    ]
+    // external: [],
+    plugins
   },
-  {
+  { // minified UMD build!
     input: 'src/index.js',
     output: {
       name: '_',
       file: pkg.browser.replace('.js', '.min.js'),
       format: 'umd'
     },
+    // external: [],
     plugins: [
-      resolve(),  // so Rollup can find dependencies like `lodash` or `core-js`
-      commonjs(), // so Rollup can transform dependencies in CommonJS to ESM
-      babel(),    // uses default config in babel.config.js (targeting browsers)
-      terser()
+      ...plugins,
+      terser() // minify js
     ]
   },
 
-  // CommonJS (for Node 8+)
+  // CommonJS (for Node) and ES module (for bundlers) build.
   {
-    input: 'src/index.js',
-    external: ['lodash'],
-    output: {
-      file: pkg.main,
-      format: 'cjs'
-    },
-    plugins: [
-      localResolve(),
-      babel({     // overriding babel.config.js, targeting node specifically
-        presets: [[
-          "@babel/preset-env", {
-            targets: {
-              node: "8"
-            }
-          }
-        ]]
-      }),
-    ]
-  },
-
-  // and ES module (for bundlers) build.
-  {
-    input: 'src/index.js',
-    external: ['lodash'],
-    output: {
-      file: pkg.module,
-      format: 'es'
-    },
-    plugins: [
-      commonjs(), // so Rollup can transform dependencies in CommonJS to ESM
-      localResolve(),
-      babel(),    // uses default config in babel.config.js (targeting browsers)
-    ]
-  },
+    input: "src/index.js",
+    output: [
+      // XXX: exports: "default" pois exportamos apenas o default no entrypoint (src/index.js)!
+      { file: pkg.main,   format: "cjs", sourcemap: true, exports: "default" },
+      { file: pkg.module, format: "es",  sourcemap: true }
+    ],
+    // XXX: não vamos fazer lodash como external! vai empacotada junto!
+    // external: ["lodash"],
+    plugins
+  }
 ]

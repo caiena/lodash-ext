@@ -2,7 +2,7 @@
 // @see https://mochajs.org/#--file-file
 //      https://github.com/mochajs/mocha/issues/3094#issuecomment-375745630
 
-'use strict'
+// 'use strict'
 
 // we can define "global hooks" here.
 
