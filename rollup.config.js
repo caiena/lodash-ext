@@ -11,12 +11,12 @@ import { terser }   from "rollup-plugin-terser"
 import pkg          from './package.json'
 
 const plugins = [
+  nodeResolve(),
+  commonjs(),
   babel({
     babelHelpers: "bundled",
     exclude:      ["node_modules/**"]
-  }),
-  nodeResolve(),
-  commonjs()
+  })
 ]
 
 
