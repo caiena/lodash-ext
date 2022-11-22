@@ -1,6 +1,6 @@
 {
   "name": "@caiena/lodash-ext",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "description": "Lodash extended",
   "main": "dist/lodash-ext.cjs.js",
   "module": "dist/lodash-ext.esm.js",
@@ -23,7 +23,6 @@
   "dependencies": {
     "lodash": "^4.17.21"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
@@ -45,9 +44,8 @@
     "eslint": "^7.12.1",
     "glob": "^7.1.6",
     "js-yaml": "^4.1.0",
-    "mocha": "^8.2.0",
+    "mocha": "^10.1.0",
     "moment": "^2.29.1",
-    "pryjs": "^1.0.3",
     "rollup": "^2.32.1",
     "rollup-plugin-copy-assets": "^2.0.1",
     "rollup-plugin-css-only": "^2.1.0",
